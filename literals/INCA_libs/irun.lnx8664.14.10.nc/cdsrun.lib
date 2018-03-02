@@ -1,2 +1,0 @@
-SOFTINCLUDE /opt/eda/INCISIV14.10.021/tools/inca/files/cds.lib
-define worklib ../worklib
