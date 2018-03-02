@@ -1,0 +1,7 @@
+define NCSIMRC	( /opt/eda/INCISIV14.10.021/tools/inca/files/ncsimrc, ~/.ncsimrc )
+include ./hdlrun.var
+define SNAPSHOT worklib.unpacked_array_initial:sv
+DEFINE RUNMODEDEFAULT 1
+DEFINE LIB_MAP ( + => worklib )
+define ELAB_SNAPSHOT
+define SNAPSHOT worklib.unpacked_array_initial:sv

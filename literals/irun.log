@@ -1,0 +1,40 @@
+irun(64): 14.10-s021: (c) Copyright 1995-2015 Cadence Design Systems, Inc.
+TOOL:	irun(64)	14.10-s021: Started on Mar 02, 2018 at 16:41:18 JST
+irun
+	-sv
+	testbench.sv
+Recompiling... reason: file './testbench.sv' is newer than expected.
+	expected: Fri Mar  2 16:40:44 2018
+	actual:   Fri Mar  2 16:41:14 2018
+file: testbench.sv
+	module worklib.unpacked_array_initial:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		unpacked_array_initial
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.unpacked_array_initial:sv <0x379c08e8>
+			streams:   8, words: 11504
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		         Instances  Unique
+		Modules:         1       1
+		Registers:       7       7
+		Initial blocks:  8       8
+	Writing initial simulation snapshot: worklib.unpacked_array_initial:sv
+Loading snapshot worklib.unpacked_array_initial:sv .................... Done
+ncsim> source /opt/eda/INCISIV14.10.021/tools/inca/files/ncsimrc
+ncsim> run
+bit of n1          32
+bit of n11          32
+bit of n2          32
+bit of n3          32
+bit of n4          32
+bit of n5          32
+bit of n6          32
+ncsim: *W,RNQUIE: Simulation is complete.
+ncsim> exit
+TOOL:	irun(64)	14.10-s021: Exiting on Mar 02, 2018 at 16:41:19 JST  (total: 00:00:01)
