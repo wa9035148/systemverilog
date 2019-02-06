@@ -1,0 +1,57 @@
+// Interface definitions
+interface DataBus (input Clock);
+  logic [7:0] Addr, Data;
+  modport TestR (inout Addr, inout Data);
+  modport Ram (inout Addr, inout Data);
+endinterface
+
+interface CtrlBus (input Clock);
+  logic RWn;
+  // RWn is output, as it is in the clocking block
+  modport TestR (output RWn);
+  // RWn is input, reversed than in the clocking block
+  modport Ram (input RWn);
+endinterface
+
+// Testbench defined as a program, with two clocking blocks
+program TestRAM (DataBus.TestR DataInt,
+                 CtrlBus.TestR CtrlInt);
+  clocking cb1 @(posedge DataInt.Clock);
+    inout #5ns DataInt.Data;
+    inout #2ns DataInt.Addr;
+  endclocking
+
+  clocking cb2 @(posedge CtrlInt.Clock);   
+    output #10;
+    output RWn = CtrlInt.RWn;  //  Hierarchical expression
+  endclocking
+
+  initial begin
+    cb2.RWn = 0;
+    cb1.DataInt.Data = 1;
+    ...
+  end
+endprogram
+
+module RAM (DataBus.Ram DataInt, CtrlBus.Ram CtrlInt);
+  logic [7:0] mem[0:255];
+
+  always @*
+    if (CtrlInt.RWn)
+      DataInt.Data = mem[DataInt.Addr];
+    else
+      mem[DataInt.Addr] = DataInt.Data;
+endmodule
+
+module Top;
+  logic Clk1, Clk2;
+
+  // Instance the interfaces
+  DataBus TheDataBus(.Clock(Clk1));
+  CtrlBus TheCtrlBus(.Clock(Clk2));
+
+  RAM TheRAM (.DataBus.Ram(TheDataBus.Ram),
+              .CtrlBus.Ram(TheCtrlBus.Ram)); // Connect them
+  TestRAM TheTest (.DataBus.TestR(TheDataBus.TestR),
+                   .CtrlBus.TestR(TheCtrlBus.TestR));
+endmodule
